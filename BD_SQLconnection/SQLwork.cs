@@ -16,7 +16,7 @@ namespace BD_SQLconnection
         {
             cn.Open();
 
-            using (SqlCommand command = new SqlCommand($"CREATE TABLE {TableName}([id] INT IDENTITY, [desc] TEXT NOT NULL, [date] DATETIME null)", cn))
+            using (SqlCommand command = new SqlCommand($"CREATE TABLE {TableName}([id] INT IDENTITY, [name] VARCHAR(15) NOT NULL, [desc] TEXT NOT NULL, [date] DATETIME null)", cn))
             {
                 try
                 {
@@ -71,7 +71,7 @@ namespace BD_SQLconnection
                 inp = Console.ReadLine();
             }
             string comm = $"INSERT INTO {tableNM} VALUES";
-            rowsValues.ForEach(x => comm += $"('{x}', '{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}'),");
+            rowsValues.ForEach(x => comm += $"('{x.Split(' ')[0]}', '"+(x.Split(' ').Length > 1 ? x.Split(' ')[1] : 0)+$"', '{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}'),");
             comm = comm.Remove(comm.Length - 1);
             using (SqlCommand command = new SqlCommand(comm, cn))
             {
